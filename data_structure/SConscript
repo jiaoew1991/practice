@@ -1,0 +1,4 @@
+Import('env')
+
+build_env = env.Clone()
+env.Program(target='arraylist_unittest', source=['arraylist_unittest.cpp'])
