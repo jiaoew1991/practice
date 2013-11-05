@@ -7,7 +7,7 @@
  */
 #ifndef LIST_H
 #define LIST_H
-#include <string>
+#include "common/error_code.h"
 
 template<class T>
 class List
@@ -27,45 +27,42 @@ public:
      */
     virtual int insert(const T&) = 0;
     /**
-     * @brief 向列表最后添加元素
-     *
+     * @brief 向列表最后添加元�?
      * @param   T element to be appended
      *
      * @returns 1 for success others for error
      */
     virtual int append(const T&) = 0;
     /**
-     * @brief 删除并返回列表最后一个元素
-     *
+     * @brief 删除并返回列表最后一个元�?
      * @param   T element removed
      *
      * @returns 1 for success others for error
      */
     virtual int remove(T&) = 0;
     /**
-     * @brief 设置到列表的开头
+     * @brief 设置到列表的�?��
      */
     virtual void setStart() = 0;
     /**
-     * @brief 放置到列表末尾
+     * @brief 放置到列表末�?
      */
     virtual void setEnd() = 0;
     /**
-     * @brief 向前移动一个位置
+     * @brief 向前移动�?��位置
      */
     virtual void prev() = 0;
     /**
-     * @brief 向后移动一个位置
+     * @brief 向后移动�?��位置
      */
     virtual void next() = 0;
     /**
-     * @brief 左边部分的长度
+     * @brief 左边部分的长�?
      * @returns 当前位置左边元素个数
      */
     virtual int leftLength() = 0;
     /**
-     * @brief 右部的长度
-     *
+     * @brief 右部的长�?
      * @returns 当前位置右边元素个数
      */
     virtual int rightLength() = 0;
@@ -78,21 +75,12 @@ public:
      */
     virtual int setPos(const int pos) = 0;
     /**
-     * @brief 得到当前元素值
-     *
+     * @brief 得到当前元素�?
      * @param   T returns
      *
      * @returns 1 for success others for error
      */
     virtual int getValue(T&) = 0;
-    /**
-     * @brief 返回列表所有元素的字符串，用逗号分割并用[]扩起
-     *
-     * @returns 1 for success others for error
-     * @example [3,4,5,6]
-     */
-    virtual int toString(std::string&) = 0;
-
 };
 
 #endif /* end of include guard: LIST_H */

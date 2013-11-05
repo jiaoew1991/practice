@@ -5,7 +5,8 @@ if platform.platform(True, True).startswith('Windows'):
     env = Environment(tools=['mingw'])
 else:
     env = Environment()
+currentPath = os.getcwd()
 
-env.Append(LIBPATH='D:/util/MinGW/lib/gcc/mingw32/4.7.2/include/c++')
+env.Append(CPPPATH=currentPath)
 
 env.SConscript('data_structure/SConscript', exports=['env'], variant_dir='data_structure/build', duplicate=0)
