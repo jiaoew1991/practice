@@ -1,6 +1,10 @@
 *.swp
+*.DS_Store
 *.o
+*.pyc
 tags
 */build/*
 *.project
 *.cproject
+.ycm_extra_conf.py
+.*.dblite

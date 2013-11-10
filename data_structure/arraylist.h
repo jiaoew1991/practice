@@ -19,120 +19,120 @@
 template<class T>
 class ArrayList: public List<T>
 {
-    public:
-        ArrayList(int size = 10)
+public:
+    ArrayList(int size = 10)
+    {
+        this->mMaxSize = size;
+        this->mListSize = this->mIndex = 0;
+        this->mData = new T[size];
+    }
+    virtual ~ArrayList()
+    {
+        delete[] this->mData;
+    }
+
+    //@override
+    void clear()
+    {
+        delete[] this->mData;
+        this->mIndex = this->mListSize = 0;
+        this->mData = new T[this->mMaxSize];
+    }
+
+    //@override
+    int insert(const T&);
+
+    //@override
+    int append(const T&);
+
+    //@override
+    int remove(T&);
+
+    //@override
+    void setStart()
+    {
+        this->mIndex = 0;
+    }
+
+    //@override
+    void setEnd()
+    {
+        this->mIndex = this->mListSize;
+    }
+
+    //@override
+    void prev()
+    { 
+        if (this->mIndex != 0)
         {
-            this->mMaxSize = size;
-            this->mListSize = this->mIndex = 0;
-            this->mData = new T[size];
+            this->mIndex--;
         }
-        virtual ~ArrayList()
+    }
+
+    //@override
+    void next()
+    { 
+        if (this->mIndex < this->mListSize - 1)
         {
-            delete[] this->mData;
+            this->mIndex++;
         }
+    }
 
-        //@override
-        void clear()
+    //@override
+    int leftLength()
+    {
+        return this->mIndex;
+    }
+
+    //@override
+    int rightLength()
+    {
+        return this->mListSize - this->mIndex;
+    }
+
+    //@override
+    int setPos(const int pos)
+    {
+        if (pos < 0 || pos > this->mListSize - 1) 
         {
-            delete[] this->mData;
-            this->mIndex = this->mListSize = 0;
-            this->mData = new T[this->mMaxSize];
+            return URANUS_INDEX_OUT_ARRAY;
         }
+        this->mIndex = pos;
+        return URANUS_SUCCESS;
+    }
 
-        //@override
-        int insert(const T&);
-
-        //@override
-        int append(const T&);
-
-        //@override
-        int remove(T&);
-
-        //@override
-        void setStart()
+    //@override
+    int getValue(T& elem)
+    {
+        if (this->rightLength() == 0)
         {
-            this->mIndex = 0;
+            return  URANUS_INDEX_OUT_ARRAY;
         }
+        elem = this->mData[this->mIndex];
+        return URANUS_SUCCESS;
+    }
 
-        //@override
-        void setEnd()
+    //@override
+    friend std::ostream& operator<<(std::ostream& os, ArrayList<T>& tList)
+    {
+        os << "[";
+        for (int i = 0; i < tList.mListSize; i++)
         {
-            this->mIndex = this->mListSize;
-        }
-
-        //@override
-        void prev()
-        { 
-            if (this->mIndex != 0)
+            os << tList.mData[i];
+            if (i != tList.mListSize - 1)
             {
-                this->mIndex--;
+                os << ",";
             }
         }
+        os << "]";
+        return os;
+    }
 
-        //@override
-        void next()
-        { 
-            if (this->mIndex < this->mListSize - 1)
-            {
-                this->mIndex++;
-            }
-        }
-
-        //@override
-        int leftLength()
-        {
-            return this->mIndex;
-        }
-
-        //@override
-        int rightLength()
-        {
-            return this->mListSize - this->mIndex;
-        }
-
-        //@override
-        int setPos(const int pos)
-        {
-            if (pos < 0 || pos > this->mListSize - 1) 
-            {
-                return URANUS_INDEX_OUT_ARRAY;
-            }
-            this->mIndex = pos;
-            return URANUS_SUCCESS;
-        }
-
-        //@override
-        int getValue(T& elem)
-        {
-            if (this->rightLength() == 0)
-            {
-                return  URANUS_INDEX_OUT_ARRAY;
-            }
-            elem = this->mData[this->mIndex];
-            return URANUS_SUCCESS;
-        }
-
-        //@override
-        friend std::ostream& operator<<(std::ostream& os, ArrayList<T>& tList)
-        {
-            os << "[";
-            for (int i = 0; i < tList.mListSize; i++)
-            {
-                os << tList.mData[i];
-                if (i != tList.mListSize - 1)
-                {
-                    os << ",";
-                }
-            }
-            os << "]";
-            return os;
-        }
-
-    private:
-        int mListSize;
-        int mMaxSize;
-        int mIndex;
-        T* mData;
+private:
+    int mListSize;
+    int mMaxSize;
+    int mIndex;
+    T* mData;
 };
 
 #include "arraylist.cpp"

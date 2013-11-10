@@ -7,7 +7,7 @@
  */
 #include "arraylist.h"
 
-    template<class T>
+template<class T>
 int ArrayList<T>::insert(const T& elem)
 {
     if (this->mListSize == this->mMaxSize)
@@ -24,7 +24,7 @@ int ArrayList<T>::insert(const T& elem)
     return URANUS_SUCCESS;
 }
 
-    template<class T>
+template<class T>
 int ArrayList<T>::append(const T& elem)
 {
     if (this->mListSize == this->mMaxSize)
@@ -36,7 +36,7 @@ int ArrayList<T>::append(const T& elem)
     return URANUS_SUCCESS;
 }
 
-    template<class T>
+template<class T>
 int ArrayList<T>::remove(T& elem)
 {
     if (this->mListSize == 0)
