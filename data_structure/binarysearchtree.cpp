@@ -63,9 +63,16 @@ BinaryTreeNode<Key, Value>* BinarySearchTree<Key, Value>::removeHelper(BinaryTre
             subRoot = subRoot->left;
         } 
         else { // both children are not null, remove it's successor
-            Value rTmpValue = subRoot->getValue();
+            Value rTmpValue;
+            subRoot->value(rTmpValue);
             subRoot->right = deleteMin(subRoot->right, pTmp);
-            subRoot->setValue(pTmp->value());
+
+            Value rPValue;
+            Key rPKey;
+            pTmp->value(rPValue);
+            pTmp->key(rPKey);
+            subRoot->setValue(rPValue);
+            subRoot->setKey(rPKey);
             pTmp->setValue(rTmpValue);
             pNode = pTmp;
         }
@@ -80,14 +87,14 @@ int BinarySearchTree<Key, Value>::findHelper(BinaryTreeNode<Key, Value>* subRoot
     if (subRoot == NULL) {
         return URANUS_EMPTY_TREE;
     }
-    else if (subRoot->keyEqual(key) > 0) {
+    else if (subRoot->keyEquals(key) > 0) {
         return findHelper(subRoot->right, key, value);
     }
-    else if (subRoot->KeyEqual(key) < 0) {
+    else if (subRoot->keyEquals(key) < 0) {
         return findHelper(subRoot->left, key, value);
     }
     else {
-        value = subRoot->value();
+        subRoot->value(value);
         return URANUS_SUCCESS;
     }
 }
@@ -95,7 +102,27 @@ int BinarySearchTree<Key, Value>::findHelper(BinaryTreeNode<Key, Value>* subRoot
 template<class Key, class Value>
 int BinarySearchTree<Key, Value>::heightHelper(BinaryTreeNode<Key, Value>* subRoot)
 {
+    if (subRoot == NULL) {
+        return 0;
+    }
     int leftHeight = heightHelper(subRoot->left);
     int rightHeight = heightHelper(subRoot->right);
     return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
+}
+
+template<class Key, class Value>
+std::ostream& BinarySearchTree<Key, Value>::outputHelper(std::ostream& os, BinaryTreeNode<Key, Value>* subRoot, int tabSize)
+{
+    if (subRoot == NULL) {
+        return os;
+    }
+    for (int i = 0; i < tabSize; i++) {
+        os << "  ";
+    }
+    Value value;
+    subRoot->value(value);
+    os << value << std::endl;
+    outputHelper(os, subRoot->left, tabSize + 1);
+    outputHelper(os, subRoot->right, tabSize + 1);
+    return os; 
 }

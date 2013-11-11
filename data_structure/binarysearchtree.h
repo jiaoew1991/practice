@@ -16,56 +16,21 @@
  * @tparam Value
  */
 template<class Key, class Value>
-class BinaryTreeNode
+class BinaryTreeNode : TreeNode<Key, Value>
 {
 public:
-    BinaryTreeNode(const Key& key, const Value& value) 
+    BinaryTreeNode(const Key& key, const Value& value) : TreeNode<Key, Value>(key, value)
     {
-        mKey = key;
-        mData = value;
         right = left = NULL;
     }
-    virtual ~BinaryTreeNode();
-
-    /**
-     * @brief @Setter
-     *
-     * @param   value
-     */
-    void setValue(const Value& value)
+    virtual ~BinaryTreeNode() 
     {
-        mData = value;
-    }
-    /**
-     * @brief @Getter
-     *
-     * @param   value
-     */
-    void value(Value& value) 
-    {
-        value = mData;
-    }
-
-    int keyEquals(const Key& key)
-    {
-        if (key == mKey) {
-            return 0;
-        } 
-        else if (key > mKey) {
-            return 1;
-        }
-        else {
-            return -1;
-        }
+        right = left = NULL;
     }
 
 public:
     BinaryTreeNode<Key, Value> *left; // left child node pointer;
     BinaryTreeNode<Key, Value> *right; // right child node pointer;
-
-private:
-    Value mData;
-    Key mKey;
 };
 /**
  * @brief 定义二叉搜索树接口，继承自SearchTree
@@ -118,7 +83,7 @@ public:
         if (pNode == NULL) {
             return URANUS_FIND_NOTHING;
         }
-        value = pNode->value();
+        pNode->value(value);
         delete pNode;
         nodeCnt--;
         return URANUS_SUCCESS;
@@ -147,6 +112,11 @@ public:
     {
         return heightHelper(mRoot);
     }
+
+    friend std::ostream& operator<< (std::ostream& os, BinarySearchTree<Key, Value>& tree)
+    {
+        return tree.outputHelper(os, tree.mRoot, 0);
+    }
 private:
     void clearHelper(BinaryTreeNode<Key, Value>*);
 
@@ -161,13 +131,48 @@ private:
      */
     BinaryTreeNode<Key, Value>* insertHelper(BinaryTreeNode<Key, Value>*, const Key& key, const Value& value);
 
+    /**
+     * @brief 删除子树的节点，并返回子树的根节点
+     *
+     * @param   BinaryTreeNode  子树的根
+     * @param   key             要删除的节点的key
+     * @param   pNode           被删除的节点的指针
+     *
+     * @returns     子树的根节点
+     */
     BinaryTreeNode<Key, Value>* removeHelper(BinaryTreeNode<Key, Value>*, const Key& key, BinaryTreeNode<Key, Value>*& pNode);
 
+    /**
+     * @brief 删除子树中key最小的节点
+     *
+     * @param   BinaryTreeNode  子树的根
+     * @param   BinaryTreeNode  被删除的节点的指针
+     *
+     * @returns     子树的根节点
+     */
     BinaryTreeNode<Key, Value>* deleteMin(BinaryTreeNode<Key, Value>*, BinaryTreeNode<Key, Value>*&);
+
+    /**
+     * @brief 通过key查找子树
+     *
+     * @param   BinaryTreeNode  子树的根节点
+     * @param   key             要查找的key
+     * @param   value           查到的value
+     *
+     * @returns   URANS_SUCCESS for find it others not
+     */
     int findHelper(BinaryTreeNode<Key, Value>*, const Key& key, Value& value);
 
+    /**
+     * @brief 获取字数的高度
+     *
+     * @param   BinaryTreeNode  子树的根节点
+     *
+     * @returns   子树的高度
+     */
     int heightHelper(BinaryTreeNode<Key, Value>*);
 
+    std::ostream& outputHelper(std::ostream& os, BinaryTreeNode<Key, Value>* subRoot, int tabSize);
 private:
     BinaryTreeNode<Key, Value> *mRoot;
     int nodeCnt;
@@ -176,5 +181,3 @@ private:
 #include "binarysearchtree.cpp"
 
 #endif /* end of include guard: BINARYSEARCHTREE_H */
-
-     * @param   BinaryTreeNode  子树的根节点

@@ -7,6 +7,87 @@
  */
 #include "common/error_code.h"
 
+template<class Key, class Value>
+class TreeNode
+{
+public:
+    TreeNode(const Key& key, const Value& value) 
+    {
+        mKey = key;
+        mData = value;
+    }
+    virtual ~TreeNode()
+    {
+    }
+    /**
+     * @brief @Setter
+     *
+     * @param   value
+     */
+    virtual void setValue(const Value& value)
+    {
+        mData = value;
+    }
+
+    /**
+     * @brief @Getter
+     *
+     * @param   value
+     */
+    virtual void value(Value& value)
+    {
+        value = mData;
+    }
+
+    /**
+     * @brief @Setter
+     *
+     * @param   key
+     */
+    virtual void setKey(const Key& key)
+    {
+        mKey = key;
+    }
+
+
+    /**
+     * @brief @Getter
+     *
+     * @param   key
+     */
+    virtual void key(Key& key)
+    {
+        key = mKey;
+    }
+
+    /**
+     * @brief compare key with mKey
+     *
+     * @param   key
+     *
+     * @returns     key > mKey return 1
+     *              key < mKey return -1
+     *              key == mKey return 0;
+     */
+    virtual int keyEquals(const Key& key)
+    {
+        if (key == mKey) {
+            return 0;
+        } 
+        else if (key > mKey) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+
+
+private:
+    Value mData;
+    Key mKey;
+
+};
 /**
  * @brief 搜索树接口
  *
