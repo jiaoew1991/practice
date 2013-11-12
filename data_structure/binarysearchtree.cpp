@@ -17,7 +17,7 @@ template<class Key, class Value>
 BinaryTreeNode<Key, Value>* BinarySearchTree<Key, Value>::insertHelper(BinaryTreeNode<Key, Value>* subRoot, const Key& key, const Value& value)
 {
     if (subRoot == NULL) {
-        subRoot = new BinaryTreeNode<Key, Value>(key, value);
+        createTreeNode(key, value, subRoot);
     }
     else if (subRoot->keyEquals(key) > 0) {
         subRoot->right = insertHelper(subRoot->right, key, value);

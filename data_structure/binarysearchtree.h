@@ -16,7 +16,7 @@
  * @tparam Value
  */
 template<class Key, class Value>
-class BinaryTreeNode : TreeNode<Key, Value>
+class BinaryTreeNode : public TreeNode<Key, Value>
 {
 public:
     BinaryTreeNode(const Key& key, const Value& value) : TreeNode<Key, Value>(key, value)
@@ -117,8 +117,8 @@ public:
     {
         return tree.outputHelper(os, tree.mRoot, 0);
     }
-private:
-    void clearHelper(BinaryTreeNode<Key, Value>*);
+protected:
+    virtual void clearHelper(BinaryTreeNode<Key, Value>*);
 
     /**
      * @brief 向子树中插入新的节点，并返回子树的根节点
@@ -129,7 +129,7 @@ private:
      *
      * @returns     子树的根节点
      */
-    BinaryTreeNode<Key, Value>* insertHelper(BinaryTreeNode<Key, Value>*, const Key& key, const Value& value);
+    virtual BinaryTreeNode<Key, Value>* insertHelper(BinaryTreeNode<Key, Value>*, const Key& key, const Value& value);
 
     /**
      * @brief 删除子树的节点，并返回子树的根节点
@@ -140,7 +140,7 @@ private:
      *
      * @returns     子树的根节点
      */
-    BinaryTreeNode<Key, Value>* removeHelper(BinaryTreeNode<Key, Value>*, const Key& key, BinaryTreeNode<Key, Value>*& pNode);
+    virtual BinaryTreeNode<Key, Value>* removeHelper(BinaryTreeNode<Key, Value>*, const Key& key, BinaryTreeNode<Key, Value>*& pNode);
 
     /**
      * @brief 删除子树中key最小的节点
@@ -150,7 +150,7 @@ private:
      *
      * @returns     子树的根节点
      */
-    BinaryTreeNode<Key, Value>* deleteMin(BinaryTreeNode<Key, Value>*, BinaryTreeNode<Key, Value>*&);
+    virtual BinaryTreeNode<Key, Value>* deleteMin(BinaryTreeNode<Key, Value>*, BinaryTreeNode<Key, Value>*&);
 
     /**
      * @brief 通过key查找子树
@@ -161,7 +161,7 @@ private:
      *
      * @returns   URANS_SUCCESS for find it others not
      */
-    int findHelper(BinaryTreeNode<Key, Value>*, const Key& key, Value& value);
+    virtual int findHelper(BinaryTreeNode<Key, Value>*, const Key& key, Value& value);
 
     /**
      * @brief 获取字数的高度
@@ -170,11 +170,35 @@ private:
      *
      * @returns   子树的高度
      */
-    int heightHelper(BinaryTreeNode<Key, Value>*);
+    virtual int heightHelper(BinaryTreeNode<Key, Value>*);
 
-    std::ostream& outputHelper(std::ostream& os, BinaryTreeNode<Key, Value>* subRoot, int tabSize);
-private:
-    BinaryTreeNode<Key, Value> *mRoot;
+    /**
+     * @brief 打印子树到输出流
+     *
+     * @param   os          输出流
+     * @param   subRoot     子树的根节点
+     * @param   tabSize     要打印的空格数
+     *
+     * @returns   outpustream
+     */
+    virtual std::ostream& outputHelper(std::ostream& os, BinaryTreeNode<Key, Value>* subRoot, int tabSize);
+
+    /**
+     * @brief 创建新的节点
+     *
+     * @param   key
+     * @param   value
+     * @param   pNode
+     *
+     * @returns   URANUS_SUCCESS for success;
+     */
+    virtual int createTreeNode(const Key& key, const Value& value, BinaryTreeNode<Key, Value>*& pNode) 
+    {
+        pNode = new BinaryTreeNode<Key, Value>(key, value);
+        return URANUS_SUCCESS;
+    }
+protected:
+    BinaryTreeNode<Key, Value>* mRoot;
     int nodeCnt;
 };
 

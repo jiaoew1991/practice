@@ -1,15 +1,26 @@
-#include "searchtree.h"
+#include "binarysearchtree.h"
 
 template<class Key, class Value>
-class BalanceTree : SearchTree<Key, Value>
+class BalanceTree : BinarySearchTree<Key, Value>
 {
-public:
-    BalanceTree();
-    ~BalanceTree();
-
+    BalanceTree(const Key& key, const Value& value) : BinarySearchTree<Key, Value>(key, value) {};
 protected:
-    virtual void clearHelper(TreeNode<Key, Value>*);
-    
-private:
-    /* data */
+
+    /**
+     * @brief 子树左旋
+     *
+     * @param   BinaryTreeNode 子树的根节点
+     *
+     * @returns   子树新的根节点
+     */
+    virtual BinaryTreeNode<Key, Value>* leftRotate(BinaryTreeNode<Key, Value>*);
+
+    /**
+     * @brief 子树右旋
+     *
+     * @param   BinaryTreeNode 子树的根节点
+     *
+     * @returns   子树新的根节点
+     */
+    virtual BinaryTreeNode<Key, Value>* rightRotate(BinaryTreeNode<Key, Value>*);
 };
