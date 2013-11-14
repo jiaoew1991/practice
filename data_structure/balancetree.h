@@ -1,9 +1,13 @@
 #include "binarysearchtree.h"
 
 template<class Key, class Value>
-class BalanceTree : BinarySearchTree<Key, Value>
+class BalanceTree : public BinarySearchTree<Key, Value>
 {
-    BalanceTree(const Key& key, const Value& value) : BinarySearchTree<Key, Value>(key, value) {};
+public:
+    BalanceTree() : BinarySearchTree<Key, Value>() {};
+
+    virtual ~BalanceTree() {};
+
 protected:
 
     /**
@@ -13,7 +17,16 @@ protected:
      *
      * @returns   子树新的根节点
      */
-    virtual BinaryTreeNode<Key, Value>* leftRotate(BinaryTreeNode<Key, Value>*);
+    virtual BinaryTreeNode<Key, Value>* leftRotate(BinaryTreeNode<Key, Value>* subRoot)
+    {
+        if (subRoot == NULL || subRoot->rightChild() == NULL) {
+            return subRoot;
+        }
+        BinaryTreeNode<Key, Value>* pNode = subRoot->rightChild();
+        subRoot->setRightChild(pNode->leftChild());
+        pNode->setLeftChild(subRoot);
+        return pNode;
+    }
 
     /**
      * @brief 子树右旋
@@ -22,5 +35,16 @@ protected:
      *
      * @returns   子树新的根节点
      */
-    virtual BinaryTreeNode<Key, Value>* rightRotate(BinaryTreeNode<Key, Value>*);
+    virtual BinaryTreeNode<Key, Value>* rightRotate(BinaryTreeNode<Key, Value>* subRoot)
+    {
+        std::cout << "right rotate begin" << std::endl;
+        if (subRoot == NULL || subRoot->leftChild() == NULL) {
+            return subRoot;
+        }
+        BinaryTreeNode<Key, Value>* pNode = subRoot->leftChild();
+        subRoot->setLeftChild(pNode->rightChild());
+        pNode->setRightChild(subRoot);
+        std::cout << "right rotate end" << std::endl;
+        return pNode;
+    }
 };

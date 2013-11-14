@@ -8,7 +8,7 @@
 #ifndef AVLSEARCHTREE_H
 #define AVLSEARCHTREE_H
 
-#include "binarysearchtree.h"
+#include "balancetree.h"
 
 /**
  * @brief define and implement AVLTreeNode class, it's the node of AVL tree
@@ -28,16 +28,33 @@ public:
     {
     }
 
-    int leftHeight() const 
+    int leftHeight() 
     {
-        return this->left ? this->left->height : 0;
+        AVLTreeNode<Key, Value>* pleftChild = leftChild();
+        return pleftChild ? pleftChild->height : 0;
     }
 
-    int rightHeight() const 
+    int rightHeight() 
     {
-        return this->right ? this->right->height : 0;
+        AVLTreeNode<Key, Value>* pRightChild = rightChild();
+        return pRightChild ? pRightChild->height : 0;
     }
 
+    /**
+     * @override
+     */
+    AVLTreeNode<Key, Value>* leftChild() 
+    {
+        return (AVLTreeNode<Key, Value>*) BinaryTreeNode<Key, Value>::leftChild();
+    }
+
+    /**
+     * @override
+     */
+    AVLTreeNode<Key, Value>* rightChild()
+    {
+        return (AVLTreeNode<Key, Value>*) BinaryTreeNode<Key, Value>::rightChild();
+    }
 public:
     int height;                     // height of the subtree
 };
@@ -49,41 +66,78 @@ public:
  * @tparam Value    value type
  */
 template<class Key, class Value>
-class AVLSearchTree : public BinarySearchTree<Key, Value>
+class AVLSearchTree : public BalanceTree<Key, Value>
 {
 public:
-    AVLSearchTree() : BinarySearchTree<Key, Value>()
+    AVLSearchTree() : BalanceTree<Key, Value>()
     {
     }
     virtual ~AVLSearchTree()
     {
     }
 
+    /**
+     * @override
+     */
+    virtual int height()
+    {
+        return ((AVLTreeNode<Key, Value>*) this->mRoot)->height;
+    }
+
 protected:
     /**
      * @override
      */
-    virtual AVLTreeNode<Key, Value>* insertHelper(AVLTreeNode<Key, Value>*, const Key&, const Value&);
+    virtual BinaryTreeNode<Key, Value>* insertHelper(BinaryTreeNode<Key, Value>*, const Key&, const Value&);
 
     /**
      * @override
      */
-    virtual AVLTreeNode<Key, Value>* removeHelper(AVLTreeNode<Key, Value>*, const Key&, AVLTreeNode<Key, Value>*&);
+    virtual BinaryTreeNode<Key, Value>* removeHelper(BinaryTreeNode<Key, Value>*, const Key&, BinaryTreeNode<Key, Value>*&);
 
     /**
      * @override
      */
-    virtual AVLTreeNode<Key, Value>* deleteMin(AVLTreeNode<Key, Value>*, AVLTreeNode<Key, Value>*&);
+    virtual BinaryTreeNode<Key, Value>* deleteMin(BinaryTreeNode<Key, Value>*, BinaryTreeNode<Key, Value>*&);
 
     /**
      * @override
      */
     virtual int createTreeNode(const Key& key, const Value& value, BinaryTreeNode<Key, Value>*& pNode) 
     {
-        pNode = AVLTreeNode<Key, Value>(key, value);
+        pNode = new AVLTreeNode<Key, Value>(key, value);
         return URANUS_SUCCESS;
     }
 
+
+private:
+
+    /**
+     * @breif 左旋之后更新字数根节点的高度
+     * @override
+     */
+    virtual AVLTreeNode<Key, Value>* leftRotate(AVLTreeNode<Key, Value>* subRoot)
+    {
+        subRoot = (AVLTreeNode<Key, Value>*) BalanceTree<Key, Value>::leftRotate(subRoot);
+        adjustHeight(subRoot->leftChild());
+        adjustHeight(subRoot);
+        return subRoot;
+    }
+
+    /**
+     * @breif 右旋之后更新字数根节点的高度
+     * @override
+     */
+    virtual AVLTreeNode<Key, Value>* rightRotate(AVLTreeNode<Key, Value>* subRoot)
+    {
+        subRoot = (AVLTreeNode<Key, Value>*) BalanceTree<Key, Value>::rightRotate(subRoot);
+        std::cout << subRoot << std::endl;
+        std::cout << "adjust right height" << std::endl;
+        adjustTree(subRoot->rightChild());
+        std::cout << "adjust left height" << std::endl;
+        adjustHeight(subRoot);
+        return subRoot;
+    }
     /**
      * @brief 调整树的结构
      *
@@ -91,17 +145,18 @@ protected:
      *
      * @returns   子树的根节点
      */
-    AVLTreeNode<Key, Value>* adjustTree(AVLTreeNode<Key, Value>*);
-private:
+    BinaryTreeNode<Key, Value>* adjustTree(AVLTreeNode<Key, Value>*);
 
-    int adjustHeight(const AVLTreeNode<Key, Value>* subRoot)
+    int adjustHeight(AVLTreeNode<Key, Value>* subRoot)
     {
+        subRoot = (AVLTreeNode<Key, Value>*) subRoot;
         if (subRoot == NULL) {
             return URANUS_EMPTY_TREE;
         }
         int leftHeight = subRoot->leftHeight();
         int rightHeight = subRoot->rightHeight();
-        subRoot->height = leftHeight > rightHeight ? leftHeight : rightHeight;
+        subRoot->height = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+        return URANUS_SUCCESS;
     }
 };
 

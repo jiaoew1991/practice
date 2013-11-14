@@ -7,8 +7,8 @@ void BinarySearchTree<Key, Value>::clearHelper(BinaryTreeNode<Key, Value>* subRo
         return;
     } 
     else {
-        clearHelper(subRoot->left);
-        clearHelper(subRoot->right);
+        clearHelper(subRoot->leftChild());
+        clearHelper(subRoot->rightChild());
         delete subRoot;
     }
 }
@@ -20,10 +20,10 @@ BinaryTreeNode<Key, Value>* BinarySearchTree<Key, Value>::insertHelper(BinaryTre
         createTreeNode(key, value, subRoot);
     }
     else if (subRoot->keyEquals(key) > 0) {
-        subRoot->right = insertHelper(subRoot->right, key, value);
+        subRoot->setRightChild(insertHelper(subRoot->rightChild(), key, value));
     } 
     else if (subRoot->keyEquals(key) <= 0) {
-        subRoot->left = insertHelper(subRoot->left, key, value);
+        subRoot->setLeftChild(insertHelper(subRoot->leftChild(), key, value));
     }
     return subRoot;
 }
@@ -31,13 +31,13 @@ BinaryTreeNode<Key, Value>* BinarySearchTree<Key, Value>::insertHelper(BinaryTre
 template<class Key, class Value>
 BinaryTreeNode<Key, Value>* BinarySearchTree<Key, Value>::deleteMin(BinaryTreeNode<Key, Value>* subRoot, BinaryTreeNode<Key, Value>*& pNode)
 {
-    if (subRoot->left) { // find the minest
-        subRoot->left = deleteMin(subRoot->left, pNode);
+    if (subRoot->leftChild()) { // find the minest
+        subRoot->setLeftChild(deleteMin(subRoot->leftChild(), pNode));
         return subRoot;
     } 
     else {  // find it! and return it's right;
         pNode = subRoot;
-        return subRoot->right;
+        return subRoot->rightChild();
     }
 }
 
@@ -48,24 +48,24 @@ BinaryTreeNode<Key, Value>* BinarySearchTree<Key, Value>::removeHelper(BinaryTre
         return NULL;
     }
     else if (subRoot->keyEquals(key) > 0) { 
-        subRoot->right = removeHelper(subRoot->right, key, pNode);
+        subRoot->setRightChild(removeHelper(subRoot->rightChild(), key, pNode));
     }
     else if (subRoot->keyEquals(key) < 0) {
-        subRoot->left = removeHelper(subRoot->left, key, pNode);
+        subRoot->setLeftChild(removeHelper(subRoot->leftChild(), key, pNode));
     }
     else { // remove target is current node;
         BinaryTreeNode<Key, Value> *pTmp;
         pNode = subRoot;
-        if (subRoot->left == NULL) { // left child is null, 
-            subRoot = subRoot->right;
+        if (subRoot->leftChild() == NULL) { // left child is null, 
+            subRoot = subRoot->rightChild();
         }
-        else if (subRoot->right == NULL) {
-            subRoot = subRoot->left;
+        else if (subRoot->rightChild() == NULL) {
+            subRoot = subRoot->leftChild();
         } 
         else { // both children are not null, remove it's successor
             Value rTmpValue;
             subRoot->value(rTmpValue);
-            subRoot->right = deleteMin(subRoot->right, pTmp);
+            subRoot->setRightChild(deleteMin(subRoot->rightChild(), pTmp));
 
             Value rPValue;
             Key rPKey;
@@ -88,10 +88,10 @@ int BinarySearchTree<Key, Value>::findHelper(BinaryTreeNode<Key, Value>* subRoot
         return URANUS_EMPTY_TREE;
     }
     else if (subRoot->keyEquals(key) > 0) {
-        return findHelper(subRoot->right, key, value);
+        return findHelper(subRoot->rightChild(), key, value);
     }
     else if (subRoot->keyEquals(key) < 0) {
-        return findHelper(subRoot->left, key, value);
+        return findHelper(subRoot->leftChild(), key, value);
     }
     else {
         subRoot->value(value);
@@ -105,8 +105,8 @@ int BinarySearchTree<Key, Value>::heightHelper(BinaryTreeNode<Key, Value>* subRo
     if (subRoot == NULL) {
         return 0;
     }
-    int leftHeight = heightHelper(subRoot->left);
-    int rightHeight = heightHelper(subRoot->right);
+    int leftHeight = heightHelper(subRoot->leftChild());
+    int rightHeight = heightHelper(subRoot->rightChild());
     return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
 }
 
@@ -122,7 +122,7 @@ std::ostream& BinarySearchTree<Key, Value>::outputHelper(std::ostream& os, Binar
     Value value;
     subRoot->value(value);
     os << value << std::endl;
-    outputHelper(os, subRoot->left, tabSize + 1);
-    outputHelper(os, subRoot->right, tabSize + 1);
+    outputHelper(os, subRoot->leftChild(), tabSize + 1);
+    outputHelper(os, subRoot->rightChild(), tabSize + 1);
     return os; 
 }

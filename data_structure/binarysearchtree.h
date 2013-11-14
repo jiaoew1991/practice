@@ -28,7 +28,27 @@ public:
         right = left = NULL;
     }
 
-public:
+    BinaryTreeNode<Key, Value>* leftChild() 
+    {
+        return left;
+    }
+
+    BinaryTreeNode<Key, Value>* rightChild() 
+    {
+        return right;
+    }
+
+    void setLeftChild(BinaryTreeNode<Key, Value>* pLeft) 
+    {
+        left = pLeft;
+    }
+
+    void setRightChild(BinaryTreeNode<Key, Value>* pRight) 
+    {
+        right = pRight;
+    }
+
+private:
     BinaryTreeNode<Key, Value> *left; // left child node pointer;
     BinaryTreeNode<Key, Value> *right; // right child node pointer;
 };
@@ -108,7 +128,7 @@ public:
     /**
      * @Override
      */
-    int height()
+    virtual int height()
     {
         return heightHelper(mRoot);
     }
