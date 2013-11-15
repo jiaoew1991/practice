@@ -84,6 +84,12 @@ public:
         return ((AVLTreeNode<Key, Value>*) this->mRoot)->height;
     }
 
+    const std::string toString() 
+    {
+        std::stringstream ss;
+        ss << "\n" << *this;
+        return ss.str();
+    }
 protected:
     /**
      * @override
@@ -130,11 +136,12 @@ private:
      */
     virtual AVLTreeNode<Key, Value>* rightRotate(AVLTreeNode<Key, Value>* subRoot)
     {
+        log4cplus::Logger logger = log4cplus::Logger::getInstance(LOG4CPLUS_TEXT("rotate"));
         subRoot = (AVLTreeNode<Key, Value>*) BalanceTree<Key, Value>::rightRotate(subRoot);
-        std::cout << subRoot << std::endl;
-        std::cout << "adjust right height" << std::endl;
-        adjustTree(subRoot->rightChild());
-        std::cout << "adjust left height" << std::endl;
+        LOG4CPLUS_DEBUG(logger, "adjust right height");
+        adjustHeight(subRoot->rightChild());
+
+        LOG4CPLUS_DEBUG(logger, "adjust subroot height");
         adjustHeight(subRoot);
         return subRoot;
     }

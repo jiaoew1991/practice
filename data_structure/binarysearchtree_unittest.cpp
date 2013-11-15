@@ -1,6 +1,5 @@
 #include "binarysearchtree.h"
 #include <gtest/gtest.h>
-#include <iostream>
 
 int testKey[] = {23,3,4,65,32,87,9,6,21,10,39,42};
 double testValue[] = {            

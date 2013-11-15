@@ -37,14 +37,21 @@ protected:
      */
     virtual BinaryTreeNode<Key, Value>* rightRotate(BinaryTreeNode<Key, Value>* subRoot)
     {
-        std::cout << "right rotate begin" << std::endl;
+        log4cplus::Logger logger = log4cplus::Logger::getInstance(LOG4CPLUS_TEXT("rotate"));
+
+        LOG4CPLUS_DEBUG(logger, "right rotate begin");
+        LOG4CPLUS_DEBUG(logger, LOG4CPLUS_TEXT(subRoot));
         if (subRoot == NULL || subRoot->leftChild() == NULL) {
             return subRoot;
         }
         BinaryTreeNode<Key, Value>* pNode = subRoot->leftChild();
         subRoot->setLeftChild(pNode->rightChild());
         pNode->setRightChild(subRoot);
-        std::cout << "right rotate end" << std::endl;
+
+        LOG4CPLUS_DEBUG(logger, "right rotate end");
+        Key key;
+        pNode->key(key);
+        LOG4CPLUS_DEBUG(logger, LOG4CPLUS_TEXT(key));
         return pNode;
     }
 };

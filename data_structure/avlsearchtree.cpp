@@ -11,7 +11,11 @@ BinaryTreeNode<Key, Value>* AVLSearchTree<Key, Value>::insertHelper(BinaryTreeNo
 
 template<class Key, class Value>
 BinaryTreeNode<Key, Value>* AVLSearchTree<Key, Value>::removeHelper(BinaryTreeNode<Key, Value>* subRoot, const Key& key, BinaryTreeNode<Key, Value>*& pNode) {
+    log4cplus::Logger logger = log4cplus::Logger::getInstance(LOG4CPLUS_TEXT("delete"));
     subRoot = BinarySearchTree<Key, Value>::removeHelper(subRoot, key, pNode);
+    if (subRoot == NULL) {
+        return NULL;
+    }
     AVLTreeNode<Key, Value>* avlSubRoot = (AVLTreeNode<Key, Value>*) subRoot;
     adjustHeight(avlSubRoot);
     return this->adjustTree(avlSubRoot);
@@ -40,15 +44,17 @@ BinaryTreeNode<Key, Value>* AVLSearchTree<Key, Value>::adjustTree(AVLTreeNode<Ke
             subRoot = this->rightRotate(subRoot);
         } 
         else {
-            std::cout << "first right" << std::endl;
+            log4cplus::Logger logger = log4cplus::Logger::getInstance(LOG4CPLUS_TEXT("rotate"));
+            LOG4CPLUS_DEBUG(logger, "first right rotate");
             subRoot = this->rightRotate(subRoot);
-            std::cout << *this << std::endl;
-            std::cout << "second right" << std::endl;
-            subRoot->setRightChild(this->rightRotate(rightChild));
-            std::cout << *this << std::endl;
-            std::cout << "left rotate" << std::endl;
+
+            LOG4CPLUS_DEBUG(logger, "second right rotate");
+
+            subRoot->setRightChild(this->rightRotate(subRoot->rightChild()));
+
+            LOG4CPLUS_DEBUG(logger, this->toString());
+
             subRoot = this->leftRotate(subRoot);
-            std::cout << *this << std::endl;
         }
     }
     else {
@@ -57,7 +63,7 @@ BinaryTreeNode<Key, Value>* AVLSearchTree<Key, Value>::adjustTree(AVLTreeNode<Ke
         }
         else {
             subRoot = this->leftRotate(subRoot);
-            subRoot->setLeftChild(this->leftRotate(leftChild));
+            subRoot->setLeftChild(this->leftRotate(subRoot->leftChild()));
             subRoot = this->rightRotate(subRoot);
         }
     }

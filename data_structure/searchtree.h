@@ -6,6 +6,7 @@
  * @date 2013-11-09
  */
 #include "common/error_code.h"
+#include "common/log.h"
 
 template<class Key, class Value>
 class TreeNode
