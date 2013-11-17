@@ -1,0 +1,7 @@
+Import('env')
+Import('libs')
+
+build_env = env.Clone()
+
+env.Program(target='polynomial', source=['polynomial.cpp'], LIBS=libs)
+env.Program(target='celebrity', source=['celebrity.cpp'], LIBS=libs)

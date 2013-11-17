@@ -30,3 +30,4 @@ libs = [
 env.Append(LIBS=['log4cplus'])
 
 env.SConscript('data_structure/SConscript', exports=['env', 'libs'], variant_dir='data_structure/build', duplicate=0)
+env.SConscript('recursive/SConscript', exports=['env', 'libs'], variant_dir='recursive/build', duplicate=0)

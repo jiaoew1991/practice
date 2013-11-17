@@ -4,6 +4,7 @@
 *.pyc
 tags
 */build/*
+/.settings
 *.project
 *.cproject
 .ycm_extra_conf.py

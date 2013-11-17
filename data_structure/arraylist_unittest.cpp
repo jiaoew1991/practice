@@ -1,4 +1,3 @@
-#include <iostream>
 #include "arraylist.h"
 
 void test_null()
@@ -6,7 +5,7 @@ void test_null()
 	ArrayList<int> al(20);
     int tmp;
     std::cout << "begin test null" << std::endl;
-    std::cout << al << std::endl << std::endl;
+    std::cout << al << std::endl;
     std::cout << al.remove(tmp) << std::endl;
     std::cout << al.getValue(tmp) << std::endl;
     std::cout << "end test null" << std::endl;
