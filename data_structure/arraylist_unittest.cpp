@@ -5,7 +5,6 @@ void test_null()
 	ArrayList<int> al(20);
     int tmp;
     std::cout << "begin test null" << std::endl;
-    std::cout << al << std::endl;
     std::cout << al.remove(tmp) << std::endl;
     std::cout << al.getValue(tmp) << std::endl;
     std::cout << "end test null" << std::endl;
@@ -18,7 +17,6 @@ void test_int_list()
     for (int i = 0; i < 20; i++) {
         slist.append(i);
     }
-    std::cout << slist << std::endl;
     slist.setPos(7);
     std::cout << slist.getValue(tmp) << "," << tmp << ","  << slist.leftLength() << ","  << slist.rightLength() << std::endl;
     std::cout << slist.setPos(3);

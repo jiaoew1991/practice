@@ -5,3 +5,5 @@ build_env = env.Clone()
 
 env.Program(target='polynomial', source=['polynomial.cpp'], LIBS=libs)
 env.Program(target='celebrity', source=['celebrity.cpp'], LIBS=libs)
+env.Program(target='max_sequence', source=['max_subsequence.cpp'], LIBS=libs)
+env.Program(target='tree_matrix', source=['binarytree_matrix.cpp'], LIBS=libs)

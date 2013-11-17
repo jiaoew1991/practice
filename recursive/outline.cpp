@@ -1,3 +1,6 @@
+/**
+ * TODO(jiaoew): to finish it
+ */
 #include "common/error_code.h"
 #include "common/log.h"
 #include <gtest/gtest.h>
@@ -28,6 +31,7 @@ private:
 };
 int outline(std::vector<Polygon>& polygons, Polygon& outlinePolygon)
 {
+	return 0;
 }
 int main(int argc, char *argv[])
 {

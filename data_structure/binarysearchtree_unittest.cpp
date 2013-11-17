@@ -13,7 +13,6 @@ TEST(binarysearchtree, normal)
 	{
 		bst.insert(testKey[i], testValue[i]);
 	}
-	std::cout << bst << std::endl;
 
 	EXPECT_EQ(bst.size(), 12);
 	EXPECT_EQ(bst.height(), 6);
@@ -54,7 +53,6 @@ TEST(binarysearchtree, removeRoot)
 	bst.insert(2, 432.214);
 	bst.insert(29, 23151.123);
 	EXPECT_EQ(bst.height(), 6);
-	std::cout << bst << std::endl;
 }
 
 int main(int argc, char *argv[])
