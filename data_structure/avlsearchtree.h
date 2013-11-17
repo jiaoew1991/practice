@@ -17,46 +17,47 @@
  * @tparam Value    data type
  */
 template<class Key, class Value>
-class AVLTreeNode : public BinaryTreeNode<Key, Value>
+class AVLTreeNode: public BinaryTreeNode<Key, Value>
 {
 public:
-    AVLTreeNode(const Key& key, const Value& value) : BinaryTreeNode<Key, Value>(key, value)
-    {
-        height = 0;
-    }
-    virtual ~AVLTreeNode() 
-    {
-    }
+	AVLTreeNode(const Key& key, const Value& value) :
+			BinaryTreeNode<Key, Value>(key, value)
+	{
+		height = 0;
+	}
+	virtual ~AVLTreeNode()
+	{
+	}
 
-    int leftHeight() 
-    {
-        AVLTreeNode<Key, Value>* pleftChild = leftChild();
-        return pleftChild ? pleftChild->height : 0;
-    }
+	int leftHeight()
+	{
+		AVLTreeNode<Key, Value>* pleftChild = leftChild();
+		return pleftChild ? pleftChild->height : 0;
+	}
 
-    int rightHeight() 
-    {
-        AVLTreeNode<Key, Value>* pRightChild = rightChild();
-        return pRightChild ? pRightChild->height : 0;
-    }
+	int rightHeight()
+	{
+		AVLTreeNode<Key, Value>* pRightChild = rightChild();
+		return pRightChild ? pRightChild->height : 0;
+	}
 
-    /**
-     * @override
-     */
-    AVLTreeNode<Key, Value>* leftChild() 
-    {
-        return (AVLTreeNode<Key, Value>*) BinaryTreeNode<Key, Value>::leftChild();
-    }
+	/**
+	 * @override
+	 */
+	AVLTreeNode<Key, Value>* leftChild()
+	{
+		return (AVLTreeNode<Key, Value>*) BinaryTreeNode<Key, Value>::leftChild();
+	}
 
-    /**
-     * @override
-     */
-    AVLTreeNode<Key, Value>* rightChild()
-    {
-        return (AVLTreeNode<Key, Value>*) BinaryTreeNode<Key, Value>::rightChild();
-    }
+	/**
+	 * @override
+	 */
+	AVLTreeNode<Key, Value>* rightChild()
+	{
+		return (AVLTreeNode<Key, Value>*) BinaryTreeNode<Key, Value>::rightChild();
+	}
 public:
-    int height;                     // height of the subtree
+	int height;                     // height of the subtree
 };
 
 /**
@@ -66,105 +67,119 @@ public:
  * @tparam Value    value type
  */
 template<class Key, class Value>
-class AVLSearchTree : public BalanceTree<Key, Value>
+class AVLSearchTree: public BalanceTree<Key, Value>
 {
 public:
-    AVLSearchTree() : BalanceTree<Key, Value>()
-    {
-    }
-    virtual ~AVLSearchTree()
-    {
-    }
+	AVLSearchTree() :
+			BalanceTree<Key, Value>()
+	{
+	}
+	virtual ~AVLSearchTree()
+	{
+	}
 
-    /**
-     * @override
-     */
-    virtual int height()
-    {
-        return ((AVLTreeNode<Key, Value>*) this->mRoot)->height;
-    }
+	/**
+	 * @override
+	 */
+	virtual int height()
+	{
+		return ((AVLTreeNode<Key, Value>*) this->mRoot)->height;
+	}
 
-    const std::string toString() 
-    {
-        std::stringstream ss;
-        ss << "\n" << *this;
-        return ss.str();
-    }
+	const std::string toString()
+	{
+		std::stringstream ss;
+		ss << "\n" << *this;
+		return ss.str();
+	}
 protected:
-    /**
-     * @override
-     */
-    virtual BinaryTreeNode<Key, Value>* insertHelper(BinaryTreeNode<Key, Value>*, const Key&, const Value&);
+	/**
+	 * @override
+	 */
+	virtual BinaryTreeNode<Key, Value>* insertHelper(
+			BinaryTreeNode<Key, Value>*, const Key&, const Value&);
 
-    /**
-     * @override
-     */
-    virtual BinaryTreeNode<Key, Value>* removeHelper(BinaryTreeNode<Key, Value>*, const Key&, BinaryTreeNode<Key, Value>*&);
+	/**
+	 * @override
+	 */
+	virtual BinaryTreeNode<Key, Value>* removeHelper(
+			BinaryTreeNode<Key, Value>*, const Key&,
+			BinaryTreeNode<Key, Value>*&);
 
-    /**
-     * @override
-     */
-    virtual BinaryTreeNode<Key, Value>* deleteMin(BinaryTreeNode<Key, Value>*, BinaryTreeNode<Key, Value>*&);
+	/**
+	 * @override
+	 */
+	virtual BinaryTreeNode<Key, Value>* deleteMin(BinaryTreeNode<Key, Value>*,
+			BinaryTreeNode<Key, Value>*&);
 
-    /**
-     * @override
-     */
-    virtual int createTreeNode(const Key& key, const Value& value, BinaryTreeNode<Key, Value>*& pNode) 
-    {
-        pNode = new AVLTreeNode<Key, Value>(key, value);
-        return URANUS_SUCCESS;
-    }
-
+	/**
+	 * @override
+	 */
+	virtual int createTreeNode(const Key& key, const Value& value,
+			BinaryTreeNode<Key, Value>*& pNode)
+	{
+		pNode = new AVLTreeNode<Key, Value>(key, value);
+		return URANUS_SUCCESS;
+	}
 
 private:
 
-    /**
-     * @breif 左旋之后更新字数根节点的高度
-     * @override
-     */
-    virtual AVLTreeNode<Key, Value>* leftRotate(AVLTreeNode<Key, Value>* subRoot)
-    {
-        subRoot = (AVLTreeNode<Key, Value>*) BalanceTree<Key, Value>::leftRotate(subRoot);
-        adjustHeight(subRoot->leftChild());
-        adjustHeight(subRoot);
-        return subRoot;
-    }
+	/**
+	 * @breif 左旋之后更新字数根节点的高度
+	 * @override
+	 */
+	virtual AVLTreeNode<Key, Value>* leftRotate(
+			AVLTreeNode<Key, Value>* subRoot)
+	{
+		subRoot =
+				(AVLTreeNode<Key, Value>*) BalanceTree<Key, Value>::leftRotate(
+						subRoot);
+		adjustHeight(subRoot->leftChild());
+		adjustHeight(subRoot);
+		return subRoot;
+	}
 
-    /**
-     * @breif 右旋之后更新字数根节点的高度
-     * @override
-     */
-    virtual AVLTreeNode<Key, Value>* rightRotate(AVLTreeNode<Key, Value>* subRoot)
-    {
-        log4cplus::Logger logger = log4cplus::Logger::getInstance(LOG4CPLUS_TEXT("rotate"));
-        subRoot = (AVLTreeNode<Key, Value>*) BalanceTree<Key, Value>::rightRotate(subRoot);
-        LOG4CPLUS_DEBUG(logger, "adjust right height");
-        adjustHeight(subRoot->rightChild());
+	/**
+	 * @breif 右旋之后更新字数根节点的高度
+	 * @override
+	 */
+	virtual AVLTreeNode<Key, Value>* rightRotate(
+			AVLTreeNode<Key, Value>* subRoot)
+	{
+		log4cplus::Logger logger = log4cplus::Logger::getInstance(
+				LOG4CPLUS_TEXT("rotate"));
+		subRoot =
+				(AVLTreeNode<Key, Value>*) BalanceTree<Key, Value>::rightRotate(
+						subRoot);
+		LOG4CPLUS_DEBUG(logger, "adjust right height");
+		adjustHeight(subRoot->rightChild());
 
-        LOG4CPLUS_DEBUG(logger, "adjust subroot height");
-        adjustHeight(subRoot);
-        return subRoot;
-    }
-    /**
-     * @brief 调整树的结构
-     *
-     * @param   AVLTreeNode 子树的根节点
-     *
-     * @returns   子树的根节点
-     */
-    BinaryTreeNode<Key, Value>* adjustTree(AVLTreeNode<Key, Value>*);
+		LOG4CPLUS_DEBUG(logger, "adjust subroot height");
+		adjustHeight(subRoot);
+		return subRoot;
+	}
+	/**
+	 * @brief 调整树的结构
+	 *
+	 * @param   AVLTreeNode 子树的根节点
+	 *
+	 * @returns   子树的根节点
+	 */
+	BinaryTreeNode<Key, Value>* adjustTree(AVLTreeNode<Key, Value>*);
 
-    int adjustHeight(AVLTreeNode<Key, Value>* subRoot)
-    {
-        subRoot = (AVLTreeNode<Key, Value>*) subRoot;
-        if (subRoot == NULL) {
-            return URANUS_EMPTY_TREE;
-        }
-        int leftHeight = subRoot->leftHeight();
-        int rightHeight = subRoot->rightHeight();
-        subRoot->height = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
-        return URANUS_SUCCESS;
-    }
+	int adjustHeight(AVLTreeNode<Key, Value>* subRoot)
+	{
+		subRoot = (AVLTreeNode<Key, Value>*) subRoot;
+		if (subRoot == NULL)
+		{
+			return URANUS_EMPTY_TREE;
+		}
+		int leftHeight = subRoot->leftHeight();
+		int rightHeight = subRoot->rightHeight();
+		subRoot->height = (leftHeight > rightHeight ? leftHeight : rightHeight)
+				+ 1;
+		return URANUS_SUCCESS;
+	}
 };
 
 #include "avlsearchtree.cpp"
