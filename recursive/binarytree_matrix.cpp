@@ -88,7 +88,6 @@ private:
 	int** mData;
 };
 
-
 TreeNode* binarytreeInsert(TreeNode* node, int value, int index)
 {
 	if (node == NULL)
