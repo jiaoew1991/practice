@@ -9,8 +9,11 @@
 
 #include "common/error_code.h"
 #include "common/log.h"
+#include "common/string_util.h"
 #include <gtest/gtest.h>
 #include <vector>
+
+Logger logger = log4cplus::Logger::getInstance("knapsack");
 
 struct TreeNode
 {
@@ -33,15 +36,16 @@ TreeNode* binarytreeInsert(TreeNode* node, int value, int& rtn)
 	}
 	else if (value > node->value)
 	{
-		node->right = binarytreeInsert(node->right, value);
-		rtn = 1;
+		node->right = binarytreeInsert(node->right, value, rtn);
 	}
 	else if (value < node->value)
 	{
-		node->left = binarytreeInsert(node->left, value);
-		rtn= 1;
-	}
-	rtn = 0;
+		node->left = binarytreeInsert(node->left, value, rtn);
+	} 
+    else 
+    {
+        rtn = 0;
+    }
 	return node;
 }
 
@@ -52,21 +56,22 @@ int knapsack(int* goodsArray, int goodsLen, int sackSize)
 	for (int i = 0; i < goodsLen; ++i)
 	{
 		int rtn = 0;
-		binarytreeInsert(root, goodsArray[i], rtn);
+		root = binarytreeInsert(root, goodsArray[i], rtn);
 		if (rtn)
 		{
 			rtnVector.push_back(goodsArray[i]);
 		}
-		for (int j = 0, len = rtnVector.size(); j < len; ++j)
+		for (int j = 0, len = rtnVector.size() - 1; j < len; ++j)
 		{
-			binarytreeInsert(root, goodsArray[i] + rtnVector[j], rtn);
+			root = binarytreeInsert(root, goodsArray[i] + rtnVector[j], rtn);
 			if (rtn)
 			{
 				rtnVector.push_back(goodsArray[i] + rtnVector[j]);
 			}
 		}
 	}
-	for (int i = 0; i < rtnVector.size(); ++i)
+    LOG4CPLUS_DEBUG(logger, toStringList<int>(rtnVector));
+	for (size_t i = 0; i < rtnVector.size(); ++i)
 	{
 		if (sackSize == rtnVector[i])
 		{
@@ -78,11 +83,20 @@ int knapsack(int* goodsArray, int goodsLen, int sackSize)
 
 TEST(recursive, knapsack)
 {
-
+    int testData[] = { 2,3, 5, 14, 9, 6};
+    //int testData[] = { 2,3, 5 };
+    int dataLen = sizeof testData / sizeof testData[0];
+    int rtn = knapsack(testData, dataLen, 14);
+    EXPECT_EQ(rtn, 1);
+    rtn = knapsack(testData, dataLen, 25);
+    EXPECT_EQ(rtn, 1);
+    rtn = knapsack(testData, dataLen, 38);
+    EXPECT_EQ(rtn, 0);
 }
 
 int main(int argc, char **argv)
 {
+    INIT_LOG("knapsack");
 	testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }

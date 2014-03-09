@@ -74,18 +74,18 @@ TEST(avlsearchtree, removeRoot)
 
 int main(int argc, char *argv[])
 {
-log4cplus::initialize();
-LogLog::getLogLog()->setInternalDebugging(true);
-SharedObjectPtr<Appender> append(new ConsoleAppender());
-append->setName(LOG4CPLUS_TEXT("First"));
+    log4cplus::initialize();
+    LogLog::getLogLog()->setInternalDebugging(true);
+    SharedObjectPtr<Appender> append(new ConsoleAppender());
+    append->setName(LOG4CPLUS_TEXT("First"));
 
-log4cplus::getMDC().put(LOG4CPLUS_TEXT("key"), LOG4CPLUS_TEXT("MDC value"));
-log4cplus::tstring pattern =
-		LOG4CPLUS_TEXT(
-				"%d{%m/%d/%y %H:%M:%S,%Q} [%t] %-5p %c{2} %%%x%% - %X{key} - %m [%l]%n");
-append->setLayout(std::auto_ptr<Layout>(new PatternLayout(pattern)));
-Logger::getRoot().addAppender(append);
+    log4cplus::getMDC().put(LOG4CPLUS_TEXT("key"), LOG4CPLUS_TEXT("MDC value"));
+    log4cplus::tstring pattern =
+        LOG4CPLUS_TEXT(
+                "%d{%m/%d/%y %H:%M:%S,%Q} [%t] %-5p %c{2} %%%x%% - %X{key} - %m [%l]%n");
+    append->setLayout(std::auto_ptr<Layout>(new PatternLayout(pattern)));
+    Logger::getRoot().addAppender(append);
 
-testing::InitGoogleTest(&argc, argv);
-return RUN_ALL_TESTS();
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

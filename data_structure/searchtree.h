@@ -1,152 +1,141 @@
-/**
- * @file searchtree.h
- * @brief 定义搜索树SearchTree接口
- * @author jiaoew
- * @version 0.1
- * @date 2013-11-09
- */
-#include "common/error_code.h"
-#include "common/log.h"
-
-template<class Key, class Value>
-class TreeNode
-{
-public:
-	TreeNode(const Key& key, const Value& value)
-	{
-		mKey = key;
-		mData = value;
-	}
-	virtual ~TreeNode()
-	{
-	}
-	/**
-	 * @brief @Setter
-	 *
-	 * @param   value
-	 */
-	virtual void setValue(const Value& value)
-	{
-		mData = value;
-	}
-
-	/**
-	 * @brief @Getter
-	 *
-	 * @param   value
-	 */
-	virtual void value(Value& value)
-	{
-		value = mData;
-	}
-
-	/**
-	 * @brief @Setter
-	 *
-	 * @param   key
-	 */
-	virtual void setKey(const Key& key)
-	{
-		mKey = key;
-	}
-
-	/**
-	 * @brief @Getter
-	 *
-	 * @param   key
-	 */
-	virtual void key(Key& key)
-	{
-		key = mKey;
-	}
-
-	/**
-	 * @brief compare key with mKey
-	 *
-	 * @param   key
-	 *
-	 * @returns     key > mKey return 1
-	 *              key < mKey return -1
-	 *              key == mKey return 0;
-	 */
-	virtual int keyEquals(const Key& key)
-	{
-		if (key == mKey)
-		{
-			return 0;
-		}
-		else if (key > mKey)
-		{
-			return 1;
-		}
-		else
-		{
-			return -1;
-		}
-	}
-
-private:
-	Value mData;
-	Key mKey;
-
-};
-/**
- * @brief 搜索树接口
- *
- * @tparam Key      key类型
- * @tparam Value    存储值的类型
- */
-template<class Key, class Value>
-class SearchTree
-{
-public:
-	/**
-	 * @brief 清空树
-	 */
-	virtual void clear() = 0;
-
-	/**
-	 * @brief 插入一个新的节点
-	 *
-	 * @param   key     节点的➹
-	 * @param   elem    节点的valuec
-	 *
-	 * @returns   URANUS_SUCCESS for success others for failed
-	 */
-	virtual int insert(const Key& key, const Value& elem) = 0;
-
-	/**
-	 * @brief 删除一个节点
-	 *
-	 * @param   key     通过key删除节点
-	 * @param   value   该节点的值
-	 *
-	 * @returns   URANUS_SUCCESS for success others for failed
-	 */
-	virtual int remove(const Key& key, Value& value) = 0;
-
-	/**
-	 * @brief  通过key找到相应的值
-	 *
-	 * @param   key
-	 * @param   value
-	 *
-	 * @returns   URANUS_SUCCESS for success others for failed
-	 */
-	virtual int find(const Key& key, Value& value) = 0;
-
-	/**
-	 * @brief 得到树大小
-	 *
-	 * @returns
-	 */
-	virtual int size() = 0;
-
-	/**
-	 * @brief 树的高度
-	 *
-	 * @returns
-	 */
-	virtual int height() = 0;
-
-};
+0000000: 2f2a 2a0a 202a 2040 6669 6c65 2073 6561  /**. * @file sea
+0000010: 7263 6874 7265 652e 680a 202a 2040 6272  rchtree.h. * @br
+0000020: 6965 6620 e5ae 9ae4 b989 e690 9ce7 b4a2  ief ............
+0000030: e6a0 9153 6561 7263 6854 7265 65e6 8ea5  ...SearchTree...
+0000040: e58f a30a 202a 2040 6175 7468 6f72 206a  .... * @author j
+0000050: 6961 6f65 770a 202a 2040 7665 7273 696f  iaoew. * @versio
+0000060: 6e20 302e 310a 202a 2040 6461 7465 2032  n 0.1. * @date 2
+0000070: 3031 332d 3131 2d30 390a 202a 2f0a 2369  013-11-09. */.#i
+0000080: 6e63 5 6465 2022 636f 6d6d 6f6e 2f65  nclude "common/e
+0000090: 7272 6f72 5f63 6f64 652e 6822 0a23 696e  rror_code.h".#in
+00000a0: 636c 7564 6520 2263 6f6d 6d6f 6e2f 6c6f  clude "common/lo
+00000b0: 672e 6822 0a0a 7465 6d70 6c61 7465 3c63  g.h"..template<c
+00000c0: 6c61 7373 204b 6579 2c20 636c 6173 7320  lass Key, class 
+00000d0: 5661 6c75 653e 0a63 6c61 7373 2054 7265  Value>.class Tre
+00000e0: 654e 6f64 650a 7b0a 7075 626c 6963 3a0a  eNode.{.public:.
+00000f0: 0954 7265 654e 6f64 6528 636f 6e73 7420  .TreeNode(const 
+0000100: 4b65 7926 206b 6579 2c20 636f 6e73 7420  Key& key, const 
+0000110: 5661 6c75 6526 2076 616c 7565 290a 097b  Value& value)..{
+0000120: 0a09 096d 4b65 7920 3d20 6b65 793b 0a09  ...mKey = key;..
+0000130: 096d 4461 7461 203d 2076 616c 7565 3b0a  .mData = value;.
+0000140: 097d 0a09 7669 7274 7561 6c20 7e54 7265  .}..virtual ~Tre
+0000150: 654e 6f64 6528 290a 097b 0a09 7d0a 092f  eNode()..{..}../
+0000160: 2a2a 0a09 202a 2040 6272 6965 6620 4053  **.. * @brief @S
+0000170: 6574 7465 720a 0920 2a0a 0920 2a20 4070  etter.. *.. * @p
+0000180: 6172 616d 2020 2076 616c 7565 0a09 202a  aram   value.. *
+0000190: 2f0a 0976 6972 7475 616c 2076 6f69 6420  /..virtual void 
+00001a0: 7365 7456 616c 7565 2863 6f6e 7374 2056  setValue(const V
+00001b0: 616c 7565 2620 7661 6c75 6529 0a09 7b0a  alue& value)..{.
+00001c0: 0909 6d44 6174 6120 3d20 7661 6c75 653b  ..mData = value;
+00001d0: 0a09 7d0a 0a09 2f2a 2a0a 0920 2a20 4062  ..}.../**.. * @b
+00001e0: 7269 6566 2040 4765 7474 6572 0a09 202a  rief @Getter.. *
+00001f0: 0a09 202a 2040 7061 7261 6d20 2020 7661  .. * @param   va
+0000200: 6c75 650a 0920 2a2f 0a09 7669 7274 7561  lue.. */..virtua
+0000210: 6c20 766f 6964 2076 616c 7565 2856 616c  l void value(Val
+0000220: 7565 2620 7661 6c75 6529 0a09 7b0a 0909  ue& value)..{...
+0000230: 7661 6c75 6520 3d20 6d44 6174 613b 0a09  value = mData;..
+0000240: 7d0a 0a09 2f2a 2a0a 0920 2a20 4062 7269  }.../**.. * @bri
+0000250: 6566 2040 5365 7474 6572 0a09 202a 0a09  ef @Setter.. *..
+0000260: 202a 2040 7061 7261 6d20 2020 6b65 790a   * @param   key.
+0000270: 0920 2a2f 0a09 7669 7274 7561 6c20 766f  . */..virtual vo
+0000280: 6964 2073 6574 4b65 7928 636f 6e73 7420  id setKey(const 
+0000290: 4b65 7926 206b 6579 290a 097b 0a09 096d  Key& key)..{...m
+00002a0: 4b65 7920 3d20 6b65 793b 0a09 7d0a 0a09  Key = key;..}...
+00002b0: 2f2a 2a0a 0920 2a20 4062 7269 6566 2040  /**.. * @brief @
+00002c0: 4765 7474 6572 0a09 202a 0a09 202a 2040  Getter.. *.. * @
+00002d0: 7061 7261 6d20 2020 6b65 790a 0920 2a2f  param   key.. */
+00002e0: 0a09 7669 7274 7561 6c20 766f 6964 206b  ..virtual void k
+00002f0: 6579 284b 6579 2620 6b65 7929 0a09 7b0a  ey(Key& key)..{.
+0000300: 0909 6b65 7920 3d20 6d4b 6579 3b0a 097d  ..key = mKey;..}
+0000310: 0a0a 092f 2a2a 0a09 202a 2040 6272 6965  .../**.. * @brie
+0000320: 6620 636f 6d70 6172 6520 6b65 7920 7769  f compare key wi
+0000330: 7468 206d 4b65 790a 0920 2a0a 0920 2a20  th mKey.. *.. * 
+0000340: 4070 6172 616d 2020 206b 6579 0a09 202a  @param   key.. *
+0000350: 0a09 202a 2040 7265 7475 726e 7320 2020  .. * @returns   
+0000360: 2020 6b65 7920 3e20 6d4b 6579 2072 6574    key > mKey ret
+0000370: 7572 6e20 310a 0920 2a20 2020 2020 2020  urn 1.. *       
+0000380: 2020 2020 2020 206b 6579 203c 206d 4b65         key < mKe
+0000390: 7920 7265 7475 726e 202d 310a 0920 2a20  y return -1.. * 
+00003a0: 2020 2020 2020 2020 2020 2020 206b 6579               key
+00003b0: 203d 3d20 6d4b 6579 2072 6574 7572 6e20   == mKey return 
+00003c0: 303b 0a09 202a 2f0a 0976 6972 7475 616c  0;.. */..virtual
+00003d0: 2069 6e74 206b 6579 4571 7561 6c73 2863   int keyEquals(c
+00003e0: 6f6e 7374 204b 6579 2620 6b65 7929 0a09  onst Key& key)..
+00003f0: 7b0a 0909 6966 2028 6b65 7920 3d3d 206d  {...if (key == m
+0000400: 4b65 7929 0a09 097b 0a09 0909 7265 7475  Key)...{....retu
+0000410: 726e 2030 3b0a 0909 7d0a 0909 656c 7365  rn 0;...}...else
+0000420: 2069 6620 286b 6579 203e 206d 4b65 7929   if (key > mKey)
+0000430: 0a09 097b 0a09 0909 7265 7475 726e 2031  ...{....return 1
+0000440: 3b0a 0909 7d0a 0909 656c 7365 0a09 097b  ;...}...else...{
+0000450: 0a09 0909 7265 7475 726e 202d 313b 0a09  ....return -1;..
+0000460: 097d 0a09 7d0a 0a70 7269 7661 7465 3a0a  .}..}..private:.
+0000470: 0956 616c 7565 206d 4461 7461 3b0a 094b  .Value mData;..K
+0000480: 6579 206d 4b65 793b 0a0a 7d3b 0a2f 2a2a  ey mKey;..};./**
+0000490: 0a20 2a20 4062 7269 6566 20e6 909c e7b4  . * @brief .....
+00004a0: a2e6 a091 e68e a5e5 8fa3 0a20 2a0a 202a  ........... *. *
+00004b0: 2040 7470 6172 616d 204b 6579 2020 2020   @tparam Key    
+00004c0: 2020 6b65 79e7 b1bb e59e 8b0a 202a 2040    key....... * @
+00004d0: 7470 6172 616d 2056 616c 7565 2020 2020  tparam Value    
+00004e0: e5ad 98e5 82a8 e580 bce7 9a84 e7b1 bbe5  ................
+00004f0: 9e8b 0a20 2a2f 0a74 656d 706c 6174 653c  ... */.template<
+0000500: 636c 6173 7320 4b65 792c 2063 6c61 7373  class Key, class
+0000510: 2056 616c 7565 3e0a 636c 6173 7320 5365   Value>.class Se
+0000520: 6172 6368 5472 6565 0a7b 0a70 7562 6c69  archTree.{.publi
+0000530: 633a 0a09 2f2a 2a0a 0920 2a20 4062 7269  c:../**.. * @bri
+0000540: 6566 20e6 b885 e7a9 bae6 a091 0a09 202a  ef ........... *
+0000550: 2f0a 0976 6972 7475 616c 2076 6f69 6420  /..virtual void 
+0000560: 636c 6561 7228 2920 3d20 303b 0a0a 092f  clear() = 0;.../
+0000570: 2a2a 0a09 202a 2040 6272 6965 6620 e68f  **.. * @brief ..
+0000580: 92e5 85a5 e4b8 80e4 b8aa e696 b0e7 9a84  ................
+0000590: e88a 82e7 82b9 0a09 202a 0a09 202a 2040  ........ *.. * @
+00005a0: 7061 7261 6d20 2020 6b65 7920 2020 2020  param   key     
+00005b0: e88a 82e7 82b9 e79a 84e2 9eb9 0a09 202a  .............. *
+00005c0: 2040 7061 7261 6d20 2020 656c 656d 2020   @param   elem  
+00005d0: 2020 e88a 82e7 82b9 e79a 8476 616c 7565    .........value
+00005e0: 630a 0920 2a0a 0920 2a20 4072 6574 7572  c.. *.. * @retur
+00005f0: 6e73 2020 2055 5241 4e55 535f 5355 4343  ns   URANUS_SUCC
+0000600: 4553 5320 666f 7220 7375 6363 6573 7320  ESS for success 
+0000610: 6f74 6865 7273 2066 6f72 2066 6169 6c65  others for faile
+0000620: 640a 0920 2a2f 0a09 7669 7274 7561 6c20  d.. */..virtual 
+0000630: 696e 7420 696e 7365 7274 2863 6f6e 7374  int insert(const
+0000640: 204b 6579 2620 6b65 792c 2063 6f6e 7374   Key& key, const
+0000650: 2056 616c 7565 2620 656c 656d 2920 3d20   Value& elem) = 
+0000660: 303b 0a0a 092f 2a2a 0a09 202a 2040 6272  0;.../**.. * @br
+0000670: 6965 6620 e588 a0e9 99a4 e4b8 80e4 b8aa  ief ............
+0000680: e88a 82e7 82b9 0a09 202a 0a09 202a 2040  ........ *.. * @
+0000690: 7061 7261 6d20 2020 6b65 7920 2020 2020  param   key     
+00006a0: e980 9ae8 bf87 6b65 79e5 88a0 e999 a4e8  ......key.......
+00006b0: 8a82 e782 b90a 0920 2a20 4070 6172 616d  ....... * @param
+00006c0: 2020 2076 616c 7565 2020 20e8 afa5 e88a     value   .....
+00006d0: 82e7 82b9 e79a 84e5 80bc 0a09 202a 0a09  ............ *..
+00006e0: 202a 2040 7265 7475 726e 7320 2020 5552   * @returns   UR
+00006f0: 414e 5553 5f53 5543 4345 5353 2066 6f72  ANUS_SUCCESS for
+0000700: 2073 7563 6365 7373 206f 7468 6572 7320   success others 
+0000710: 666f 7220 6661 696c 6564 0a09 202a 2f0a  for failed.. */.
+0000720: 0976 6972 7475 616c 2069 6e74 2072 656d  .virtual int rem
+0000730: 6f76 6528 636f 6e73 7420 4b65 7926 206b  ove(const Key& k
+0000740: 6579 2c20 5661 6c75 6526 2076 616c 7565  ey, Value& value
+0000750: 2920 3d20 303b 0a0a 092f 2a2a 0a09 202a  ) = 0;.../**.. *
+0000760: 2040 6272 6965 6620 20e9 809a e8bf 876b   @brief  ......k
+0000770: 6579 e689 bee5 88b0 e79b b8e5 ba94 e79a  ey..............
+0000780: 84e5 80bc 0a09 202a 0a09 202a 2040 7061  ...... *.. * @pa
+0000790: 7261 6d20 2020 6b65 790a 0920 2a20 4070  ram   key.. * @p
+00007a0: 6172 616d 2020 2076 616c 7565 0a09 202a  aram   value.. *
+00007b0: 0a09 202a 2040 7265 7475 726e 7320 2020  .. * @returns   
+00007c0: 5552 414e 5553 5f53 5543 4345 5353 2066  URANUS_SUCCESS f
+00007d0: 6f72 2073 7563 6365 7373 206f 7468 6572  or success other
+00007e0: 7320 666f 7220 6661 696c 6564 0a09 202a  s for failed.. *
+00007f0: 2f0a 0976 6972 7475 616c 2069 6e74 2066  /..virtual int f
+0000800: 696e 6428 636f 6e73 7420 4b65 7926 206b  ind(const Key& k
+0000810: 6579 2c20 5661 6c75 6526 2076 616c 7565  ey, Value& value
+0000820: 2920 3d20 303b 0a0a 092f 2a2a 0a09 202a  ) = 0;.../**.. *
+0000830: 2040 6272 6965 6620 e5be 97e5 88b0 e6a0   @brief ........
+0000840: 91e5 a4a7 e5b0 8f0a 0920 2a0a 0920 2a20  ......... *.. * 
+0000850: 4072 6574 7572 6e73 0a09 202a 2f0a 0976  @returns.. */..v
+0000860: 6972 7475 616c 2069 6e74 2073 697a 6528  irtual int size(
+0000870: 2920 3d20 303b 0a0a 092f 2a2a 0a09 202a  ) = 0;.../**.. *
+0000880: 2040 6272 6965 6620 e6a0 91e7 9a84 e9ab   @brief ........
+0000890: 98e5 baa6 0a09 202a 0a09 202a 2040 7265  ...... *.. * @re
+00008a0: 7475 726e 730a 0920 2a2f 0a09 7669 7274  turns.. */..virt
+00008b0: 7561 6c20 696e 7420 6865 6967 6874 2829  ual int height()
+00008c0: 203d 2030 3b0a 0a7d 3b0a                  = 0;..};.

@@ -27,7 +27,7 @@ void test_int_list()
 }
 void test_index_out_range()
 {
-    
+
 }
 void test_remove_out_range()
 {
