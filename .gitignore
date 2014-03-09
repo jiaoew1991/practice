@@ -12,3 +12,6 @@ tags
 *.config
 
 *.sublime-project
+#binary files
+*.jpg
+*.zip
