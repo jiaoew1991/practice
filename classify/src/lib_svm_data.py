@@ -27,4 +27,4 @@ def generate_datafile(image_dir, label, num=300):
     fsvm.close()
 
 if __name__ == '__main__':
-    generate_datafile('../recaptured image/DatasetA/AcerB/Scenery-AcerB', '+1')
+    generate_datafile('../../recaptured image/recap_A', '-1')
