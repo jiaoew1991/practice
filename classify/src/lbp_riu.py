@@ -57,16 +57,33 @@ def lib_riu(img_src, p, r):
             index = _img_threshold(img, x, y, point_raidus[str(p)+'_'+str(r)])
             result[index] += 1
     return result
-    
+
+def matrix():
+    img = cv2.imread('jew.jpg', 0)
+    temp = []
+
+    for x in range(len(img)):
+        temp_2 = []
+        for y in range(len(img[0])):
+            index = _img_threshold(img, x, y, point_raidus['8_1'])
+            temp_2.append(index)
+        temp.append(temp_2)
+    for i in range(len(temp)):
+        for j in range(len(temp_2)):
+            print temp[i][j],
+        print '\n'
+    # return temp
 
 if __name__ == '__main__':
-    from time import strftime, gmtime
-    print 'begin', strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 8, 1)
-    print '8 1 finished',strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 16, 2)
-    print '16 2 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 24, 3)
-    print '24 3 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 24, 4)
-    print '24 4 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    # from time import strftime, gmtime
+    # print 'begin', strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    # print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 8, 1)
+    # print '8 1 finished',strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    # print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 16, 2)
+    # print '16 2 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    # print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 24, 3)
+    # print '24 3 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    # print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 24, 4)
+    # print '24 4 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
+
+    matrix()
