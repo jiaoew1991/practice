@@ -5,14 +5,17 @@ IMAGE_MAX_SIZE = 300;
 
 img = imread(imagePath);
 [width, height, channel] = size(img);
-if width > height
-    ratio = IMAGE_MAX_SIZE / width;
-else
-    ratio = IMAGE_MAX_SIZE / height;
-end
-newWidth = int32(ratio * width);
-newHeight = int32(ratio * height);
-output = imresize(img, ratio);
+% if width > height
+%     ratio = IMAGE_MAX_SIZE / width;
+% else
+%     ratio = IMAGE_MAX_SIZE / height;
+% end
+% newWidth = int32(ratio * width);
+% newHeight = int32(ratio * height);
+% output = imresize(img, ratio);
+output = img;
+newWidth = width;
+newHeight = height;
 
 end
 

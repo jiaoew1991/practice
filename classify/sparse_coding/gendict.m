@@ -1,7 +1,7 @@
 function [ output_args ] = gendict( image_dir )
 %GENDICT Summary of this function goes here
 %   Detailed explanation goes here
-RANDOM_NUM = 100;
+RANDOM_NUM = 200;
 PATCH_SIZE = 8;
 SPARSITY = 5;
 
