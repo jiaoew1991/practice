@@ -14,8 +14,8 @@ img = imread(imagePath);
 % newHeight = int32(ratio * height);
 % output = imresize(img, ratio);
 output = img;
-newWidth = width;
-newHeight = height;
+newWidth = int32(width);
+newHeight = int32(height);
 
 end
 
