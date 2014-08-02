@@ -1,5 +1,6 @@
 # coding: utf-8
-import numpy
+import numpy as np
+import matplotlib.pyplot as plt
 import cv2
 
 point_raidus = {
@@ -75,6 +76,16 @@ def matrix():
     # return temp
 
 if __name__ == '__main__':
+    img = cv2.imread('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110003.jpg')
+    blue, green, red = cv2.split(img)
+    cv2.imwrite('blue.jpg', blue)
+    cv2.imwrite('green.jpg',green)
+    cv2.imwrite('red.jpg',red)
+    #gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    #cv2.imwrite("hhh.jpg", gray);
+    #cv2.imwrite('rgb2gray-rgb.jpg', img)
+    #img = lib_riu('../test/origin/im91_c.jpg', 24, 3)
+    #cv2.imwrite('lbp-demo.png', img)
     # from time import strftime, gmtime
     # print 'begin', strftime("%Y-%m-%d %H:%M:%S", gmtime())
     # print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 8, 1)
@@ -85,5 +96,4 @@ if __name__ == '__main__':
     # print '24 3 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
     # print lib_riu('../recaptured image/DatasetA/AcerB/Scenery-AcerB/PIC091110002.jpg', 24, 4)
     # print '24 4 finished', strftime("%Y-%m-%d %H:%M:%S", gmtime())
-
-    matrix()
+    #matrix()

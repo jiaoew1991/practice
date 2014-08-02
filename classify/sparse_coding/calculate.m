@@ -1,11 +1,29 @@
-function [ output ] = calculate( imagePath, D, T, patchSize )
+function [ output ] = calculate( imagePath, D, T, patchSize, varargin )
 %CALCULATE Summary of this function goes here
 %   Detailed explanation goes here
 
 % image = imread(imagePath);
-[targetImg, width, height] = scalaImage(imagePath);
+calcType = 'normal';
+if nargin > 4
+    calcType = varargin{1};
+end
+[tmpImg, width, height] = scalaImage(imagePath);
 %uWidth = (width - patchSize + 1);
 %uHeight = (height - patchSize + 1);
+
+targetImg = tmpImg;
+if strcmp(calcType, 'lbp8_1')
+    mapping = getmapping(8, 'riu2');
+    targetImg = lbp(targetImg, 1, 8, mapping, 'i');  
+elseif strcmp(calcType, 'lpq')
+    lpqFilters = createLPQfilters(9);
+    charOri = charOrientation(tmpImg);
+    targetImg = ri_lpq(tmpImg, lpqFilters, charOri, 'im');
+end
+
+[width, height] = size(targetImg);
+width = int32(width);
+height = int32(height);
 
 patchMatrix = subImageMatrix(targetImg, patchSize);
 patchMatrix2_1 = subImageMatrix(targetImg(1:width/2, 1:height/2), patchSize);

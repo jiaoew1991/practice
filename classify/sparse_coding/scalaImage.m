@@ -13,7 +13,7 @@ img = imread(imagePath);
 % newWidth = int32(ratio * width);
 % newHeight = int32(ratio * height);
 % output = imresize(img, ratio);
-output = img;
+output = rgb2gray(img);
 newWidth = int32(width);
 newHeight = int32(height);
 
